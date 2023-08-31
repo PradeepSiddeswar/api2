@@ -1,28 +1,40 @@
 const Category = require('../Model/Category_Model');
-
-// Get all categories
-exports.getAllCategories = async (req, res) => {
-  try {
-    const category = await Category.find();
-    res.json({ category });
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-// Create a new category
+ 
 exports.createCategory = async (req, res) => {
   try {
-    const { title, image } = req.body;
-    const newCategory = new Category({
-      title,
-      image,
-    });
-    const savedCategory = await newCategory.save();
-    res.json(savedCategory);
+    const { name } = req.body;
+    const category = new Category({ name });
+
+    await category.save();
+    res.json({ category });
   } catch (error) {
     console.error('Error creating category:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Error creating category' });
   }
 };
+exports.getAllCategories = async (req, res) => {
+  try {
+    const categories = await Category.find({}, { _id: 1, name: 1 });
+    res.json({ category: categories });
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ error: 'Error fetching categories' });
+  }
+};
+
+
+exports.delete = (req, res) => {
+  const id = req.params.id
+
+  Category.findByIdAndDelete(id)
+      .then(data => {
+          if (!data) {
+              res.status(400).send(`User not Found with ${id}`)
+          } else {
+              res.send("user deleted successfully")
+          }
+      })
+      .catch(error => {
+          res.status(500).send(error)
+      })
+}

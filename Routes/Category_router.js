@@ -8,5 +8,5 @@ router.get('/get', categoryController.getAllCategories);
 
 // Define a POST route for creating a new category
 router.post('/', categoryController.createCategory);
-
+router.delete('/delete/:id', categoryController.delete)
 module.exports = router;
