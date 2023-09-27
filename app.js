@@ -22,6 +22,9 @@ app.use(bp.urlencoded({extended:false}));
 
 
 const categoryRouter = require('./Routes/Category_router')
+const LoginProfileRpute = require('./Routes/LoginProfile_Router')
+
+
 
 dotenv.config({ path: '.env'})
 const PORT = process.env.PORT || 5000
@@ -48,3 +51,4 @@ app.use(express.static("upload"))
 app.use( express.static('path_to_image_directory'));
 
 app.use('/api/category', categoryRouter);
+app.use('/LoginProfile', LoginProfileRpute)
