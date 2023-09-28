@@ -10,6 +10,7 @@ router.get("/get", LoginProfileController.get);
 router.post("/",imagemulter.single("image"),LoginProfileController.create);
 // Delete a new specialist 
 router.delete('/delete/:id', LoginProfileController.delete)
+router.put('/profiles/:id', LoginProfileController.update);
 
 // route.post("/", imagemulter.single("image"), imagecontroller.create)
 
